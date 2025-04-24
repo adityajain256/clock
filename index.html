@@ -4,37 +4,71 @@
   <meta charset="UTF-8">
   <title>Stopwatch</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    #display {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-    button {
-      padding: 10px 20px;
-      margin: 5px;
-      font-size: 16px;
-    }
-    #history {
-      margin-top: 20px;
-      list-style-type: none;
-      padding: 0;
-    }
-    #history li {
-      font-size: 18px;
-    }
+    .timer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 70px;
+    font-size: 64px;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #282c34;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    text-align: center;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 50vh;
+    width: 50vw;
+}
+
+.button{
+    background-color: #000000;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition-duration: 0.4s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.button:hover {
+    background-color: #555555;
+    color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.hide{
+    display: none;
+}
   </style>
 </head>
-<body>
+<body >
 
   <h1>Stopwatch</h1>
-  <div id="display">00:00</div>
-  <button id="startStopBtn">Start</button>
-  <button id="resetBtn">Reset</button>
-  <button id="lapBtn">Lap</button>
+  <div id="display" class="timer">00:00</div>
+  <button id="startStopBtn" class="button" >Start</button>
+  <button id="resetBtn" class="button">Reset</button>
+  <button id="lapBtn" class="button">Lap</button>
 
   <ul id="history"></ul>
 
