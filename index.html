@@ -1,135 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock</title>
+  <meta charset="UTF-8">
+  <title>Stopwatch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #display {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+    }
+    #history {
+      margin-top: 20px;
+      list-style-type: none;
+      padding: 0;
+    }
+    #history li {
+      font-size: 18px;
+    }
+  </style>
 </head>
-<style>
-    .timer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 70px;
-    font-size: 64px;
-}
-
-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #282c34;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
-    text-align: center;
-}
-.main{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 50vh;
-    width: 50vw;
-}
-
-.button{
-    background-color: #000000;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 25px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
-    transition-duration: 0.4s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-family: 'Courier New', Courier, monospace;
-}
-
-.button:hover {
-    background-color: #555555;
-    color: white;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.hide{
-    display: none;
-}
-</style>
 <body>
-    <div>
-        <h1>Clock by ADITYA jain</h1>
-    </div>
-    <div>
-        <h2>Current date- </h2>
-        <h2 id="date"></h2>
-    </div>
-    <div id="Timer" class="main">
-        <div class="timer">
-            <h1 id="hour">0</h1><h1>:</h1><h1 id="minutes">0</h1><h1>:</h1><h1 id="sec">0</h1>
-        </div>
-        <div id="mainSub">
-            <button id="start" class="button">Start</button>
-            <button id="stop" class="button">Stop</button>
-            <button id="lap" class="button">Lap</button>
-        </div>
 
-        <button id="reset" class="button">Reset</button>
-        <ul id="history"></ul>
-    </div>
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-    let timer;
+  <h1>Stopwatch</h1>
+  <div id="display">00:00</div>
+  <button id="startStopBtn">Start</button>
+  <button id="resetBtn">Reset</button>
+  <button id="lapBtn">Lap</button>
+
+  <ul id="history"></ul>
+
+  <script>
+    let timer = null;
     let isRunning = false;
     let seconds = 0;
 
-    function updateTime() {
-        seconds++;
-        document.getElementById("display").textContent = formatTime(seconds);
+    function formatTime(s) {
+      const mins = String(Math.floor(s / 60)).padStart(2, '0');
+      const secs = String(s % 60).padStart(2, '0');
+      return `${mins}:${secs}`;
     }
 
-    function formatTime(s) {
-        const mins = Math.floor(s / 60).toString().padStart(2, '0');
-        const secs = (s % 60).toString().padStart(2, '0');
-        return `${mins}:${secs}`;
+    function updateDisplay() {
+      document.getElementById("display").textContent = formatTime(seconds);
     }
 
     function toggleStartStop() {
-        if (isRunning) {
-            clearInterval(timer);
-        } else {
-            timer = setInterval(updateTime, 1000);
-        }
-        isRunning = !isRunning;
+      if (isRunning) {
+        clearInterval(timer);
+        document.getElementById("startStopBtn").textContent = "Start";
+      } else {
+        timer = setInterval(() => {
+          seconds++;
+          updateDisplay();
+        }, 1000);
+        document.getElementById("startStopBtn").textContent = "Stop";
+      }
+      isRunning = !isRunning;
     }
 
     function reset() {
-        clearInterval(timer);
-        isRunning = false;
-        seconds = 0;
-        document.getElementById("display").textContent = "00:00";
-        document.getElementById("history").innerHTML = "";
+      clearInterval(timer);
+      isRunning = false;
+      seconds = 0;
+      updateDisplay();
+      document.getElementById("history").innerHTML = "";
+      document.getElementById("startStopBtn").textContent = "Start";
     }
 
-    function saveLap() {
-        const lap = document.createElement("li");
-        lap.textContent = formatTime(seconds);
-        document.getElementById("history").appendChild(lap);
+    function lap() {
+      const lapTime = formatTime(seconds);
+      const li = document.createElement("li");
+      li.textContent = lapTime;
+      document.getElementById("history").appendChild(li);
     }
 
     document.getElementById("startStopBtn").addEventListener("click", toggleStartStop);
     document.getElementById("resetBtn").addEventListener("click", reset);
-    document.getElementById("lapBtn").addEventListener("click", saveLap);
-});
-</script>
+    document.getElementById("lapBtn").addEventListener("click", lap);
+  </script>
 
 </body>
 </html>
