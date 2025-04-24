@@ -27,7 +27,7 @@ body{
 .main{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 50vh;
     width: 50vw;
@@ -50,7 +50,9 @@ body{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-family: 'Courier New', Courier, monospace;
 }
-
+#history{
+  font-size: 45px;
+}
 .button:hover {
     background-color: #555555;
     color: white;
@@ -69,9 +71,10 @@ body{
   <button id="startStopBtn" class="button" >Start</button>
   <button id="resetBtn" class="button">Reset</button>
   <button id="lapBtn" class="button">Lap</button>
-</div>
+  
   <ul id="history"></ul>
 
+</div>
   <script>
     let timer = null;
     let isRunning = false;
